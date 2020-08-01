@@ -39,9 +39,9 @@
         }
 
         async function test(){
-            var encoded = review_encode("this is a test string")
-            const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json')
-            console.log(model.predict(arr))
+            var encoded = review_encode("this is a test string");
+            const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
+            console.log(model.predict(encoded));
         }
         test();
         // model.predict([]).then(function(scores){
