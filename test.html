@@ -5,16 +5,17 @@
     <p id="result"></p>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js"></script>
+    <script src="./projects/tf_start/word_index.json.js"></script>
     <script>
         var text = 'this is a sample test';
-        var model = tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
+        const model = tf.loadLayersModel('projects/tf_start/jsModel/model.json');
 
         function review_encode(text) {
             var arr = string_to_arr(text);
             var encoded = [1];
             var count = 0;
             for (word of arr) {
-                encoded.push(dict[word]);
+                encoded.push(word_index[word]);
                 if (count >= 250) {
                     break;
                 }
@@ -23,7 +24,7 @@
             if (encoded.length < 250) {
                 console.log("The array length is " + encoded.length);
                 for (var i = 0; i < (249 - count); i++) {
-                    encoded.push(dict["<PAD>"]);
+                    encoded.push(word_index["<PAD>"]);
                 }
             }
             return encoded;
@@ -36,7 +37,11 @@
         function myFunction(name) {
           return "Helldasfdsao " + name;
         }
-        document.getElementById("result").innerHTML = model.predict(review_encode(text));
+        model.predict([]).then(function(scores){
+            scores = scores[0];
+            document.getElementById("result").innerHTML = scores;
+        });
+
     </script>
 </body>
 
