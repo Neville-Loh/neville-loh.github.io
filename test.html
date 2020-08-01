@@ -8,7 +8,7 @@
     <script src="./projects/tf_start/word_index.json.js"></script>
     <script>
         var text = 'this is a sample test';
-        const model = tf.loadLayersModel('projects/tf_start/jsModel/model.json');
+        //const model = tf.loadLayersModel('projects/tf_start/jsModel/model.json');
 
         function review_encode(text) {
             var arr = string_to_arr(text);
@@ -37,10 +37,17 @@
         function myFunction(name) {
           return "Helldasfdsao " + name;
         }
-        model.predict([]).then(function(scores){
-            scores = scores[0];
-            document.getElementById("result").innerHTML = scores;
-        });
+
+        async function test(){
+            var encoded = review_encode("this is a test string")
+            const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json')
+            console.log(model.predict(arr))
+        }
+        test();
+        // model.predict([]).then(function(scores){
+        //     scores = scores[0];
+        //     document.getElementById("result").innerHTML = scores;
+        // });
 
     </script>
 </body>
