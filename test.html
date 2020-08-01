@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js"></script>
     <script src="./projects/tf_start/word_index.json.js"></script>
     <script>
-        console.log("Update 9");
+        console.log("Update 10");
         var text = 'this is a sample test';
         //const model = tf.loadLayersModel('projects/tf_start/jsModel/model.json');
 
@@ -39,7 +39,7 @@
         }
 
         async function test(){
-            var encoded = review_encode("This is very good, would watch again");
+            var encoded = review_encode("This is really bad, what the hell am I even playing");
             const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
             console.log(encoded);
             var result = model.predict(tf.tensor([encoded])).array();
