@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>>
+
+<body>
+    <p id="result"></p>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js"></script>
+    <script>
+        var text = 'this is a sample test';
+        var model = tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
+
+        function review_encode(text) {
+            var arr = string_to_arr(text);
+            var encoded = [1];
+            var count = 0;
+            for (word of arr) {
+                encoded.push(dict[word]);
+                if (count >= 250) {
+                    break;
+                }
+                count++;
+            }
+            if (encoded.length < 250) {
+                console.log("The array length is " + encoded.length);
+                for (var i = 0; i < (249 - count); i++) {
+                    encoded.push(dict["<PAD>"]);
+                }
+            }
+            return encoded;
+
+        }
+        function string_to_arr(s) {
+            return s.replace(/[\W_]+/g, " ").split(" ");
+        }
+
+        function myFunction(name) {
+          return "Helldasfdsao " + name;
+        }
+        document.getElementById("result").innerHTML = model.predict(review_encode(text));
+    </script>
+</body>
+
+</html>
