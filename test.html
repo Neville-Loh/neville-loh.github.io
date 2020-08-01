@@ -41,9 +41,9 @@
         async function test(){
             var encoded = review_encode("this is a test string");
             const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
-            
-            var result = model.predict(tf.tensor(encoded))
-            
+            console.log(encoded);
+            var result = model.predict(tf.tensor(encoded).array());
+            alert(result);
             console.log(result);    
             console.log(result[0]);
             console.log(result[1]);
