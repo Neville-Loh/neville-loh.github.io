@@ -1,26 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-	<h1>Hello, world!</h1>
-	<div class="container">
-		<div class="row">
-		  <div class="col-sm">
-			<form>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <h1>Hello, world!</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <form>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Example textarea</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
           </div>
-				  <!-- <label for="exampleInputEmail1">Email address</label>
+          <!-- <label for="exampleInputEmail1">Email address</label>
 				  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
 				  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 				</div>
@@ -32,63 +35,70 @@
 				  <input type="checkbox" class="form-check-input" id="exampleCheck1">
 				  <label class="form-check-label" for="exampleCheck1">Check me out</label>
 				</div> -->
-				<button type="submit" class="btn btn-primary" id="button-send">Submit</button>
-			  </form>
-		  </div>
-		</div>
-	  </div>
+          <button type="submit" class="btn btn-primary" id="button-send">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
-	<script>
-    document.getElementById('button-send').addEventListener('click', ()=>{
-        var text = document.querySelector('#exampleFormControlTextarea1').value;
-      })
+  <script>
 
     // ----------------------------------------------------------------------------
     console.log("Update 2")
-    console.log(text)
+
     function review_encode(text) {
-            var arr = string_to_arr(text);
-            var encoded = [1];
-            var count = 0;
-            for (word of arr) {
-                encoded.push(word_index[word]);
-                if (count >= 250) {
-                    break;
-                }
-                count++;
-            }
-            if (encoded.length < 250) {
-                for (var i = 0; i < (249 - count); i++) {
-                    encoded.push(word_index["<PAD>"]);
-                }
-            }
-            return encoded;
+      var arr = string_to_arr(text);
+      var encoded = [1];
+      var count = 0;
+      for (word of arr) {
+        encoded.push(word_index[word]);
+        if (count >= 250) {
+          break;
+        }
+        count++;
+      }
+      if (encoded.length < 250) {
+        for (var i = 0; i < (249 - count); i++) {
+          encoded.push(word_index["<PAD>"]);
+        }
+      }
+      return encoded;
 
-        }
-        function string_to_arr(s) {
-            return s.replace(/[\W_]+/g, " ").split(" ");
-        }
+    }
+    function string_to_arr(s) {
+      return s.replace(/[\W_]+/g, " ").split(" ");
+    }
 
-        function myFunction(name) {
-          return "Helldasfdsao " + name;
-        }
+    async function test(my_str) {
+      var encoded = review_encode(my_str);
+      const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
+      console.log(encoded);
+      var result = model.predict(tf.tensor([encoded])).array();
+      console.log(result);
+      result.then(value => console.log(value));
+    }
 
-        async function test(){
-            var encoded = review_encode("This is really bad, what the hell am I even playing");
-            const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
-            console.log(encoded);
-            var result = model.predict(tf.tensor([encoded])).array();
-            console.log(result);
-            result.then(value => console.log(value));
-        }
-        test();
+    document.getElementById('button-send').addEventListener('click', () => {
+      const text = document.querySelector('#exampleFormControlTextarea1').value;
+      if (text != null){      
+        console.log(text);
+        test(text);
+      }
+    })
     // ----------------------------------------------------------------------------
-	</script>
+  </script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
