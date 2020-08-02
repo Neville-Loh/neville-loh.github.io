@@ -1,212 +1,50 @@
-  
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0NW5Z2MYC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      gtag('config', 'G-H0NW5Z2MYC');
-    </script>
-    <title>Digit Recognition WebApp</title>
-    <meta name="description" content="Simple Machine Learning Model into an WebApp using TensorFlow.js">
-    <meta name="keywords" content="Machine Learning, TensorFlow.js">
-    <meta name="author" content="Carlos Aguayo">
-    <style>
-      body {
-        touch-action: none; /*https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action*/
-        font-family: "Roboto";
-      }
-      h1 {
-        margin: 50px;
-        font-size: 70px;
-        text-align: center;
-      }
-      #paint {
-        border:3px solid red;
-        margin: auto;
-      }
-      #predicted { 
-        font-size: 60px;
-        margin-top: 60px;
-        text-align: center;
-      }
-      #number {
-        border: 3px solid black;
-        margin: auto;
-        margin-top: 30px;
-        text-align: center;
-        vertical-align: middle;
-      }
-      #clear {
-        margin: auto;
-        margin-top: 70px;
-        padding: 30px;
-        text-align: center;
-      }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
   </head>
   <body>
-    <!--<script type="text/javascript" src="http://livejs.com/live.js"></script>-->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js"></script>
-    <h1>Digit Recognition WebApp</h1>
-    <div id="paint">
-      <canvas id="myCanvas"></canvas>
-    </div>
-    <div id="predicted">
-      Recognized digit
-      <div id="number"></div>
-      <button id="clear">Clear</button>
-    </div>
-    <script>
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobile) {
-      $('#paint').css({'width': '60%'});
-      $('#number').css({'width': '30%', 'font-size': '240px'});
-      $('#clear').css({'font-size': '50px'});
-    } else {
-      $('#paint').css({'width': '300px'});
-      $('#number').css({'width': '150px', 'font-size': '120px'});
-      $('#clear').css({'font-size': '35px'});
-    }
+	<h1>Hello, world!</h1>
+	<div class="container">
+		<div class="row">
+		  <div class="col-sm">
+			<form>
+				<div class="form-group">
+				  <label for="exampleInputEmail1">Email address</label>
+				  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+				  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+				</div>
+				<div class="form-group">
+				  <label for="exampleInputPassword1">Password</label>
+				  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				</div>
+				<div class="form-check">
+				  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+				  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+				</div>
+				<button type="submit" class="btn btn-primary" id="button-send">Submit</button>
+			  </form>
+		  </div>
+		</div>
+	  </div>
 
-    var cw = $('#paint').width();
-    $('#paint').css({'height': cw + 'px'});
+	<script>
+		const init = function(){
+			document.getElementById('button-send').addEventListener('click',send)
+		}
+	</script>
 
-    cw = $('#number').width();
-    $('#number').css({'height': cw + 'px'});
-
-    // From https://www.html5canvastutorials.com/labs/html5-canvas-paint-application/
-    var canvas = document.getElementById('myCanvas');
-    var context = canvas.getContext('2d');
-
-    var compuetedStyle = getComputedStyle(document.getElementById('paint'));
-    canvas.width = parseInt(compuetedStyle.getPropertyValue('width'));
-    canvas.height = parseInt(compuetedStyle.getPropertyValue('height'));
-
-    var mouse = {x: 0, y: 0};
-
-    canvas.addEventListener('mousemove', function(e) {
-      mouse.x = e.pageX - this.offsetLeft;
-      mouse.y = e.pageY - this.offsetTop;
-    }, false);
-
-    context.lineWidth = isMobile ? 60 : 25;
-    context.lineJoin = 'round';
-    context.lineCap = 'round';
-    context.strokeStyle = '#0000FF';
-
-    canvas.addEventListener('mousedown', function(e) {
-      context.moveTo(mouse.x, mouse.y);
-      context.beginPath();
-      canvas.addEventListener('mousemove', onPaint, false);
-    }, false);
-
-    canvas.addEventListener('mouseup', function() {
-      $('#number').html('<img id="spinner" src="spinner.gif"/>');
-      canvas.removeEventListener('mousemove', onPaint, false);
-      var img = new Image();
-      img.onload = function() {
-        context.drawImage(img, 0, 0, 28, 28);
-        data = context.getImageData(0, 0, 28, 28).data;
-        var input = [];
-        for(var i = 0; i < data.length; i += 4) {
-          input.push(data[i + 2] / 255);
-        }
-        predict(input);
-      };
-      img.src = canvas.toDataURL('image/png');
-    }, false);
-
-    var onPaint = function() {
-      context.lineTo(mouse.x, mouse.y);
-      context.stroke();
-    };
-
-    // ------------------------------------- MY stuff ----------------------------------------
-
-    var model = tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
-
-    tf.loadLayersModel('./projects/tf_start/jsModel/model.json').then(function(model) {
-      window.model = model;
-    });
-
-    // Prepocessing
-    var text = 'this is a sample test';
-
-    function review_encode(arr){
-      var encoded = [1];
-      var count = 0;
-      for (word of arr){
-        encoded.push(dict[word]);
-        if (count >= 250){
-          break;
-        }
-        count++;
-      }
-      if (encoded.length < 250){
-        console.log("The array length is " + encoded.length);
-        for (var i = 0; i < (249 - count); i ++){
-          encoded.push(dict["<PAD>"]);
-        }
-      }
-
-      return encoded;
-
-    }
-    function string_to_arr(s){
-     return s.replace(/[\W_]+/g," ").split(" ");
-    }
-
-    function myFunction(name) {
-  return "Hello " + name;
-}
-document.getElementById("demo").innerHTML = myFunction("John");
-
-    // ----------------------------------- end mystuff --------------------------------------
-    var encoding = 
-    // http://bencentra.com/code/2014/12/05/html5-canvas-touch-events.html
-    // Set up touch events for mobile, etc
-    canvas.addEventListener('touchstart', function (e) {
-      var touch = e.touches[0];
-      canvas.dispatchEvent(new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      }));
-    }, false);
-    canvas.addEventListener('touchend', function (e) {
-      canvas.dispatchEvent(new MouseEvent('mouseup', {}));
-    }, false);
-    canvas.addEventListener('touchmove', function (e) {
-      var touch = e.touches[0];
-      canvas.dispatchEvent(new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      }));
-    }, false);
-    var predict = function(input) {
-      if (window.model) {
-        window.model.predict([tf.tensor(input).reshape([1, 28, 28, 1])]).array().then(function(scores){
-          scores = scores[0];
-          predicted = scores.indexOf(Math.max(...scores));
-          $('#number').html(predicted);
-        });
-      } else {
-        // The model takes a bit to load, if we are too fast, wait
-        setTimeout(function(){predict(input)}, 50);
-      }
-    }
-
-    $('#clear').click(function(){
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      $('#number').html('');
-    });
-    </script>
-
-    <h1>Thsdf<p id="demo"></p></h1><p id="demo"></p>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
