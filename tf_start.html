@@ -16,8 +16,11 @@
 		<div class="row">
 		  <div class="col-sm">
 			<form>
-				<div class="form-group">
-				  <label for="exampleInputEmail1">Email address</label>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+          </div>
+				  <!-- <label for="exampleInputEmail1">Email address</label>
 				  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
 				  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 				</div>
@@ -28,7 +31,7 @@
 				<div class="form-check">
 				  <input type="checkbox" class="form-check-input" id="exampleCheck1">
 				  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-				</div>
+				</div> -->
 				<button type="submit" class="btn btn-primary" id="button-send">Submit</button>
 			  </form>
 		  </div>
@@ -36,9 +39,50 @@
 	  </div>
 
 	<script>
-		const init = function(){
-			document.getElementById('button-send').addEventListener('click',send)
-		}
+    document.getElementById('button-send').addEventListener('click', ()=>{
+        var text = document.querySelector('#exampleFormControlTextarea1').value;
+      })
+
+    // ----------------------------------------------------------------------------
+    console.log("Update 2")
+    console.log(text)
+    function review_encode(text) {
+            var arr = string_to_arr(text);
+            var encoded = [1];
+            var count = 0;
+            for (word of arr) {
+                encoded.push(word_index[word]);
+                if (count >= 250) {
+                    break;
+                }
+                count++;
+            }
+            if (encoded.length < 250) {
+                for (var i = 0; i < (249 - count); i++) {
+                    encoded.push(word_index["<PAD>"]);
+                }
+            }
+            return encoded;
+
+        }
+        function string_to_arr(s) {
+            return s.replace(/[\W_]+/g, " ").split(" ");
+        }
+
+        function myFunction(name) {
+          return "Helldasfdsao " + name;
+        }
+
+        async function test(){
+            var encoded = review_encode("This is really bad, what the hell am I even playing");
+            const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
+            console.log(encoded);
+            var result = model.predict(tf.tensor([encoded])).array();
+            console.log(result);
+            result.then(value => console.log(value));
+        }
+        test();
+    // ----------------------------------------------------------------------------
 	</script>
 
     <!-- Optional JavaScript -->
