@@ -1,3 +1,6 @@
+
+
+
 function animatedForm(){
     const arrows = document.querySelectorAll(".fa-arrow-down")
 
@@ -81,19 +84,26 @@ function string_to_arr(s) {
 
 async function test(my_input){
     var encoded = review_encode(my_input);
+    // const tfn = require("@tensorflow/tfjs-node");
+    // const handler = tfn.io.fileSystem("./projects/tf_start/jsModel/model.json");
+    // const model = await tf.loadLayersModel(handler);
+
     const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
     console.log(encoded);
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
         var value = score.pop();
-
+        
+        console.log("console log value");
         console.log(value);
+        console.log("console log value");
+        console.log(score);
         if (value < 0.5){
             error("rgb(189, 87, 87");
         } else {
             error("rgb(87, 189, 139");
         }
-        return true;
+        return value;
     });
     //result.then(value => console.log(value[0]));
     
