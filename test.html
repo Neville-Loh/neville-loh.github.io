@@ -34,10 +34,6 @@
             return s.replace(/[\W_]+/g, " ").split(" ");
         }
 
-        function myFunction(name) {
-          return "Helldasfdsao " + name;
-        }
-
         async function test(){
             var encoded = review_encode("This is really bad, what the hell am I even playing");
             const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');

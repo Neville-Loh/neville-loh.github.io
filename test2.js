@@ -86,7 +86,14 @@ async function test(my_input){
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
         var value = score.pop();
-        return value;
+
+        console.log(value);
+        if (value < 0.5){
+            error("rgb(189, 87, 87");
+        } else {
+            error("rgb(87, 189, 139");
+        }
+        return true;
     });
     //result.then(value => console.log(value[0]));
     
