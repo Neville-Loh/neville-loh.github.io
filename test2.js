@@ -85,6 +85,8 @@ async function test(my_input){
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
         console.log(score)
+        console.log(score[0])
+        console.log(score[0][0])
         return score[0];
     });
     //result.then(value => console.log(value[0]));
@@ -93,5 +95,5 @@ async function test(my_input){
 
 // ---------------------------- end tf model --------------------------------- //
 
-console.log("update3");
+console.log("update4");
 animatedForm();
