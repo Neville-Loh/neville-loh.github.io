@@ -13,6 +13,8 @@ function animatedForm(){
 
             // check for validation
                 if(input.type === "text" && validateUser(input)){
+
+
                     console.log(input.value);
                     var score = test(input.value);
                     console.log("everything is okay!" + score);
@@ -21,6 +23,7 @@ function animatedForm(){
                     } else {
                         error("rgb(87, 189, 139");
                     }
+                    //nextSlide(parent, nextForm);
                 }
         });
     });
@@ -36,11 +39,22 @@ function validateUser(user){
         return true;
     }
 }
+function nextSlide(parent, nextForm){
+    parent.classList.add('innactive');
+    parent.classList.remove('active');
+    nextForm.classList.add('active');
+
+}
 
 function error(color){
     document.body.style.backgroundColor = color;
 }
 
+
+
+
+
+// ------------------------------- tf model ------------------------------ //
 function review_encode(text) {
     var arr = string_to_arr(text);
     var encoded = [1];
@@ -71,12 +85,13 @@ async function test(my_input){
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
         console.log(score)
-        return score;
+        return score[0];
     });
     //result.then(value => console.log(value[0]));
     
 }
 
+// ---------------------------- end tf model --------------------------------- //
 
-console.log("update2");
+console.log("update3");
 animatedForm();
