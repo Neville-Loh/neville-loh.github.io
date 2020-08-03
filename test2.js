@@ -14,8 +14,13 @@ function animatedForm(){
             // check for validation
                 if(input.type === "text" && validateUser(input)){
                     console.log(input.value);
-                    test(input.value);
-                    console.log("everything is okay!");
+                    var score = test(input.value);
+                    console.log("everything is okay!" + score);
+                    if (score < 0.5){
+                        error("rgb(189, 87, 87");
+                    } else {
+                        error("rgb(87, 189, 139");
+                    }
                 }
         });
     });
@@ -63,11 +68,15 @@ async function test(my_input){
     var encoded = review_encode(my_input);
     const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
     console.log(encoded);
-    var result = model.predict(tf.tensor([encoded])).array();
-    alert(result);
-    result.then(value => console.log(value));
+    var result = model.predict(tf.tensor([encoded])).array().then(function(score){
+        score = score[0];
+        console.log(score)
+        return score;
+    });
+    //result.then(value => console.log(value[0]));
+    
 }
 
 
-console.log("update1");
+console.log("update2");
 animatedForm();
