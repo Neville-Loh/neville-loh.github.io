@@ -18,6 +18,7 @@ function animatedForm(){
                     console.log(input.value);
                     var score = test(input.value);
                     console.log("everything is okay!" + score);
+                    console.log(score);
                     if (score < 0.5){
                         error("rgb(189, 87, 87");
                     } else {
@@ -84,9 +85,9 @@ async function test(my_input){
     console.log(encoded);
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
-        console.log(score)
-        console.log(score[0])
-        console.log(score[0][0])
+        var value = score.pop();
+        console.log(value);
+        console.log(score);
         return score[0];
     });
     //result.then(value => console.log(value[0]));
@@ -95,5 +96,5 @@ async function test(my_input){
 
 // ---------------------------- end tf model --------------------------------- //
 
-console.log("update4");
+console.log("update5");
 animatedForm();
