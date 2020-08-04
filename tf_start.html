@@ -5,6 +5,10 @@
     <meta charset="UFT-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/2c47453fdb.js" crossorigin="anonymous"></script>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -13,10 +17,13 @@
 
 <body>
     <form>
-      
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Example textarea</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
         <div class="field-name">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="type something" required rows="3">
+            <input type="text" placeholder="type something" required>
             <i class="fas fa-arrow-down"></i>
         </div>
         <div class="field-email innactive">

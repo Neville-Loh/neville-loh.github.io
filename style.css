@@ -12,6 +12,7 @@ body {
     position: relative;
 }
 
+.form-group,
 .field-name,
 .field-email,
 .field-password,
@@ -29,8 +30,9 @@ body {
     align-items: center;
     border-radius: 5px;
     transition: all 0.5s ease;
-}
+}   
 
+.form-group i,
 .field-name i,
 .field-email i,
 .field-password i,

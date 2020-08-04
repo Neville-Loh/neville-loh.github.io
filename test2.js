@@ -18,8 +18,7 @@ function animatedForm(){
                 if(input.type === "text" && validateUser(input)){
 
 
-                    console.log(input.value);
-                    var score = test(input.value);
+                    //evaluate(input.value);
                     console.log("everything is okay!" + score);
                     console.log(score);
                     if (score < 0.5){
@@ -55,6 +54,15 @@ function error(color){
 }
 
 
+function load_result(value){
+    if (value < 0.5){
+        error("rgb(189, 87, 87");
+    } else {
+        error("rgb(87, 189, 139");
+    }
+    return value;
+}
+
 
 
 
@@ -82,7 +90,7 @@ function string_to_arr(s) {
     return s.replace(/[\W_]+/g, " ").split(" ");
 }
 
-async function test(my_input){
+async function evaluate(my_input){
     var encoded = review_encode(my_input);
     // const tfn = require("@tensorflow/tfjs-node");
     // const handler = tfn.io.fileSystem("./projects/tf_start/jsModel/model.json");
@@ -93,17 +101,13 @@ async function test(my_input){
     var result = model.predict(tf.tensor([encoded])).array().then(function(score){
         score = score[0];
         var value = score.pop();
-        
+
         console.log("console log value");
         console.log(value);
         console.log("console log value");
         console.log(score);
-        if (value < 0.5){
-            error("rgb(189, 87, 87");
-        } else {
-            error("rgb(87, 189, 139");
-        }
-        return value;
+
+        load_result(value);
     });
     //result.then(value => console.log(value[0]));
     
