@@ -18,7 +18,7 @@ function animatedForm(){
                 if(input.type === "text" && validateUser(input)){
 
 
-                    //evaluate(input.value);
+                    evaluate(input.value);
                     console.log("everything is okay!" + score);
                     console.log(score);
                     if (score < 0.5){
