@@ -1,3 +1,7 @@
 # neville-loh.github.io
 
-Portfolio Web site currently under developement.
+Portfolio website is currently under developement.
+
+
+please visit http://neville-loh.github.io
+
