@@ -3,5 +3,5 @@
 Portfolio website is currently under developement.
 
 
-please visit http://neville-loh.github.io
+please visit http://www.nevilleloh.com
 
