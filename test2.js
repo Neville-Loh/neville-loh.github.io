@@ -21,10 +21,10 @@ function animatedForm() {
                 console.log(score);
                 if (score < 0.5) {
                     error("rgb(189, 87, 87");
-                    showNeg(val);
+                    showNeg(score);
                 } else {
                     error("rgb(87, 189, 139");
-                    showPos(val);
+                    showPos(score);
                 }
                 //nextSlide(parent, nextForm);
             }
@@ -35,7 +35,7 @@ function animatedForm() {
 
 function showNeg(val){
     num = Math.round((val + Number.EPSILON) * 10000) /100
-    document.getElementById("n1").innerHTML = "The model predict your text is Positive! <br/> Score: " + num;
+    document.getElementById("n1").innerHTML = "The model predicts your text is Positive! <br/> Score: " + num;
 
     document.getElementById("n1").parentElement.classList.add('active');
     document.getElementById("n1").parentElement.classList.remove('innactive');
@@ -46,7 +46,7 @@ function showNeg(val){
 
 function showPos(val){
     num = Math.round((val + Number.EPSILON) * 10000) /100
-    document.getElementById("p1").innerHTML = "The model predict your text is Positive! <br/> Score: " + num;
+    document.getElementById("p1").innerHTML = "The model predicts your text is Positive! <br/> Score: " + num;
 
 
     document.getElementById("p1").parentElement.classList.add('active');
