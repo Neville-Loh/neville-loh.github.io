@@ -82,10 +82,10 @@ function error(color) {
 function load_result(value) {
     if (value < 0.5) {
         error("rgb(189, 87, 87");
-        showNeg(score);
+        showNeg(value);
     } else {
         error("rgb(87, 189, 139");
-        showPos(score);
+        showPos(value);
     }
     return value;
 }
@@ -143,7 +143,7 @@ async function evaluate(my_input) {
 // ---------------------------- end tf model --------------------------------- //
 
 
-console.log("update7");
+console.log("update8");
 animatedForm();
 
 var form = document.getElementById("myForm");
