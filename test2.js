@@ -17,15 +17,15 @@ function animatedForm() {
             // check for validation
             if (input.type === "text" && validateUser(input)) {
                 evaluate(input.value);
-                console.log("everything is okay!" + score);
-                console.log(score);
-                if (score < 0.5) {
-                    error("rgb(189, 87, 87");
-                    showNeg(score);
-                } else {
-                    error("rgb(87, 189, 139");
-                    showPos(score);
-                }
+                // console.log("everything is okay!" + score);
+                // console.log(score);
+                // if (score < 0.5) {
+                //     error("rgb(189, 87, 87");
+                //     showNeg(score);
+                // } else {
+                //     error("rgb(87, 189, 139");
+                //     showPos(score);
+                // }
                 //nextSlide(parent, nextForm);
             }
         });
@@ -82,8 +82,10 @@ function error(color) {
 function load_result(value) {
     if (value < 0.5) {
         error("rgb(189, 87, 87");
+        showNeg(score);
     } else {
         error("rgb(87, 189, 139");
+        showPos(score);
     }
     return value;
 }
