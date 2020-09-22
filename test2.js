@@ -16,8 +16,6 @@ function animatedForm(){
 
             // check for validation
                 if(input.type === "text" && validateUser(input)){
-
-
                     evaluate(input.value);
                     console.log("everything is okay!" + score);
                     console.log(score);
