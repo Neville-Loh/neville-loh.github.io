@@ -1,12 +1,12 @@
 
 
 
-function animatedForm(){
+function animatedForm() {
     const arrows = document.querySelectorAll(".fa-arrow-down")
 
-    arrows.forEach(arrow =>{
+    arrows.forEach(arrow => {
         // error cheching=
-        arrow.addEventListener('click', () =>{
+        arrow.addEventListener('click', () => {
             // if valid move on to the next box
             const input = arrow.previousElementSibling;
             const parent = arrow.parentElement;
@@ -15,23 +15,50 @@ function animatedForm(){
 
 
             // check for validation
-                if(input.type === "text" && validateUser(input)){
-                    evaluate(input.value);
-                    console.log("everything is okay!" + score);
-                    console.log(score);
-                    if (score < 0.5){
-                        error("rgb(189, 87, 87");
-                    } else {
-                        error("rgb(87, 189, 139");
-                    }
-                    //nextSlide(parent, nextForm);
+            if (input.type === "text" && validateUser(input)) {
+                evaluate(input.value);
+                console.log("everything is okay!" + score);
+                console.log(score);
+                if (score < 0.5) {
+                    error("rgb(189, 87, 87");
+                    showNeg(val);
+                } else {
+                    error("rgb(87, 189, 139");
+                    showPos(val);
                 }
+                //nextSlide(parent, nextForm);
+            }
         });
+
     });
 }
 
-function validateUser(user){
-    if(user.value.length < 3){
+function showNeg(val){
+    num = Math.round((val + Number.EPSILON) * 10000) /100
+    document.getElementById("n1").innerHTML = "The model predict your text is Positive! <br/> Score: " + num;
+
+    document.getElementById("n1").parentElement.classList.add('active');
+    document.getElementById("n1").parentElement.classList.remove('innactive');
+
+    document.getElementById("p1").parentElement.classList.add('innactive');
+    document.getElementById("p1").parentElement.classList.remove('active');
+}
+
+function showPos(val){
+    num = Math.round((val + Number.EPSILON) * 10000) /100
+    document.getElementById("p1").innerHTML = "The model predict your text is Positive! <br/> Score: " + num;
+
+
+    document.getElementById("p1").parentElement.classList.add('active');
+    document.getElementById("p1").parentElement.classList.remove('innactive');
+
+    document.getElementById("n1").parentElement.classList.add('innactive');
+    document.getElementById("n1").parentElement.classList.remove('active');
+}
+
+
+function validateUser(user) {
+    if (user.value.length < 3) {
         console.log('not enough characters');
         error("rgb(189, 87, 87");
         return false;
@@ -40,20 +67,20 @@ function validateUser(user){
         return true;
     }
 }
-function nextSlide(parent, nextForm){
+function nextSlide(parent, nextForm) {
     parent.classList.add('innactive');
     parent.classList.remove('active');
     nextForm.classList.add('active');
 
 }
 
-function error(color){
+function error(color) {
     document.body.style.backgroundColor = color;
 }
 
 
-function load_result(value){
-    if (value < 0.5){
+function load_result(value) {
+    if (value < 0.5) {
         error("rgb(189, 87, 87");
     } else {
         error("rgb(87, 189, 139");
@@ -88,7 +115,7 @@ function string_to_arr(s) {
     return s.replace(/[\W_]+/g, " ").split(" ");
 }
 
-async function evaluate(my_input){
+async function evaluate(my_input) {
     var encoded = review_encode(my_input);
     // const tfn = require("@tensorflow/tfjs-node");
     // const handler = tfn.io.fileSystem("./projects/tf_start/jsModel/model.json");
@@ -96,7 +123,7 @@ async function evaluate(my_input){
 
     const model = await tf.loadLayersModel('./projects/tf_start/jsModel/model.json');
     console.log(encoded);
-    var result = model.predict(tf.tensor([encoded])).array().then(function(score){
+    var result = model.predict(tf.tensor([encoded])).array().then(function (score) {
         score = score[0];
         var value = score.pop();
 
@@ -108,10 +135,21 @@ async function evaluate(my_input){
         load_result(value);
     });
     //result.then(value => console.log(value[0]));
-    
+
 }
 
 // ---------------------------- end tf model --------------------------------- //
 
-console.log("update6");
+
+console.log("update7");
 animatedForm();
+
+var form = document.getElementById("myForm");
+function handleForm(event) { 
+    event.preventDefault(); 
+    document.getElementById("btn").click();
+} 
+form.addEventListener('submit', handleForm);
+
+
+

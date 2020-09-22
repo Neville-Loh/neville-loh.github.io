@@ -12,15 +12,26 @@
     <script src="https://kit.fontawesome.com/2c47453fdb.js" crossorigin="anonymous"></script>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <title>Form Animation</title>
+    <title>Text Classification</title>
 </head>
 
 <body>
-    <form>
+    <div class="pos innactive">
+        <h1 id="p1">The model predict your text is Positive! <br/>
+            Score: 100%
+        </h1>
+    </div>
+    <div class="neg innactive">
+        <h1 id="n1">The model predict your text is Negative! <br/>
+            Score: 0%
+        </h1>
+    </div>
+
+    <form id="myForm">
         <div class="field-name">
             <i class="fas fa-square"></i>
-            <input type="text" placeholder="type something" required>
-            <i class="fas fa-arrow-down"></i>
+            <input id="word" type="text" placeholder="type something" required>
+            <i class="fas fa-arrow-down" id="btn"></i>
         </div>
     </form>
     
