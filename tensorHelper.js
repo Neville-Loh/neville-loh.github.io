@@ -17,16 +17,6 @@ function animatedForm() {
             // check for validation
             if (input.type === "text" && validateUser(input)) {
                 evaluate(input.value);
-                // console.log("everything is okay!" + score);
-                // console.log(score);
-                // if (score < 0.5) {
-                //     error("rgb(189, 87, 87");
-                //     showNeg(score);
-                // } else {
-                //     error("rgb(87, 189, 139");
-                //     showPos(score);
-                // }
-                //nextSlide(parent, nextForm);
             }
         });
 
@@ -35,11 +25,10 @@ function animatedForm() {
 
 function showNeg(val){
     num = Math.round((val + Number.EPSILON) * 10000) /100
-    document.getElementById("n1").innerHTML = "The model predicts your text is Positive! <br/> Score: " + num;
+    document.getElementById("n1").innerHTML = "The model predicts your text is Negative! <br/> Score: " + num;
 
     document.getElementById("n1").parentElement.classList.add('active');
     document.getElementById("n1").parentElement.classList.remove('innactive');
-
     document.getElementById("p1").parentElement.classList.add('innactive');
     document.getElementById("p1").parentElement.classList.remove('active');
 }
@@ -51,7 +40,6 @@ function showPos(val){
 
     document.getElementById("p1").parentElement.classList.add('active');
     document.getElementById("p1").parentElement.classList.remove('innactive');
-
     document.getElementById("n1").parentElement.classList.add('innactive');
     document.getElementById("n1").parentElement.classList.remove('active');
 }
@@ -146,11 +134,13 @@ async function evaluate(my_input) {
 console.log("update8");
 animatedForm();
 
+
 var form = document.getElementById("myForm");
 function handleForm(event) { 
     event.preventDefault(); 
     document.getElementById("btn").click();
 } 
+
 form.addEventListener('submit', handleForm);
 
 
